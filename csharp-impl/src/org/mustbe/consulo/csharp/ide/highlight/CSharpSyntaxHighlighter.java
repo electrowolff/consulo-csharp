@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 import org.mustbe.consulo.csharp.lang.lexer.CSharpLexer;
-import org.mustbe.consulo.csharp.lang.psi.CSharpTemplateTokens;
 import org.mustbe.consulo.csharp.lang.psi.CSharpTokenSets;
 import org.mustbe.consulo.csharp.lang.psi.CSharpTokens;
 import com.intellij.lexer.Lexer;
@@ -72,7 +71,7 @@ public class CSharpSyntaxHighlighter extends SyntaxHighlighterBase
 		safeMap(ourKeys, StringEscapesTokenTypes.INVALID_UNICODE_ESCAPE_TOKEN, DefaultLanguageHighlighterColors.INVALID_STRING_ESCAPE);
 
 		safeMap(ourKeys, CSharpTokens.NON_ACTIVE_SYMBOL, CodeInsightColors.NOT_USED_ELEMENT_ATTRIBUTES);
-		safeMap(ourKeys, CSharpTemplateTokens.MACRO_FRAGMENT, CSharpHighlightKey.LINE_COMMENT);
+		safeMap(ourKeys, CSharpTokens.PREPROCESSOR_DIRECTIVE, CSharpHighlightKey.LINE_COMMENT);
 	}
 
 	@NotNull

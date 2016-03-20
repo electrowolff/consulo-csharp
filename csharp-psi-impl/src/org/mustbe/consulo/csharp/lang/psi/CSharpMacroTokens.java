@@ -26,22 +26,31 @@ import com.intellij.psi.tree.IElementType;
  */
 public interface CSharpMacroTokens extends TokenType
 {
+	@Deprecated
 	IElementType MACRO_IF_KEYWORD = new IElementType("MACRO_IF_KEYWORD", CSharpMacroLanguage.INSTANCE);
 
+	@Deprecated
 	IElementType MACRO_ELSE_KEYWORD = new IElementType("MACRO_IF_KEYWORD", CSharpMacroLanguage.INSTANCE);
 
+	@Deprecated
 	IElementType MACRO_ELIF_KEYWORD = new IElementType("MACRO_ELIF_KEYWORD", CSharpMacroLanguage.INSTANCE);
 
+	@Deprecated
 	IElementType MACRO_ENDIF_KEYWORD = new IElementType("MACRO_ENDIF_KEYWORD", CSharpMacroLanguage.INSTANCE);
 
+	@Deprecated
 	IElementType MACRO_REGION_KEYWORD = new IElementType("MACRO_REGION_KEYWORD", CSharpMacroLanguage.INSTANCE);
 
+	@Deprecated
 	IElementType MACRO_ENDREGION_KEYWORD = new IElementType("MACRO_ENDREGION_KEYWORD", CSharpMacroLanguage.INSTANCE);
 
+	@Deprecated
 	IElementType MACRO_DEFINE_KEYWORD = new IElementType("MACRO_DEFINE_KEYWORD", CSharpMacroLanguage.INSTANCE);
 
+	@Deprecated
 	IElementType MACRO_UNDEF_KEYWORD = new IElementType("MACRO_UNDEF_KEYWORD", CSharpMacroLanguage.INSTANCE);
 
+	@Deprecated
 	IElementType MACRO_VALUE = new IElementType("MACRO_VALUE", CSharpMacroLanguage.INSTANCE);
 
 	IElementType MACRO_STOP = new IElementType("MACRO_STOP", CSharpMacroLanguage.INSTANCE);
@@ -50,6 +59,8 @@ public interface CSharpMacroTokens extends TokenType
 
 	IElementType OROR = new IElementType("OROR", CSharpMacroLanguage.INSTANCE);
 
+	IElementType SHARP = new IElementType("SHARP", CSharpMacroLanguage.INSTANCE);
+
 	IElementType ANDAND = new IElementType("ANDAND", CSharpMacroLanguage.INSTANCE);
 
 	IElementType LPAR = new IElementType("LPAR", CSharpMacroLanguage.INSTANCE);
@@ -57,6 +68,4 @@ public interface CSharpMacroTokens extends TokenType
 	IElementType RPAR = new IElementType("RPAR =", CSharpMacroLanguage.INSTANCE);
 
 	IElementType EXCL = new IElementType("EXCL", CSharpMacroLanguage.INSTANCE);
-
-	IElementType CSHARP_FRAGMENT = new IElementType("CSHARP_FRAGMENT", CSharpMacroLanguage.INSTANCE);
 }

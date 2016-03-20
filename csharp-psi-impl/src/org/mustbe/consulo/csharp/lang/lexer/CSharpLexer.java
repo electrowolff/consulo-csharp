@@ -16,7 +16,6 @@
 
 package org.mustbe.consulo.csharp.lang.lexer;
 
-import org.mustbe.consulo.csharp.lang.psi.CSharpTemplateTokens;
 import org.mustbe.consulo.csharp.lang.psi.CSharpTokens;
 import org.mustbe.consulo.csharp.lang.psi.CSharpTokensImpl;
 import com.intellij.lexer.Lexer;
@@ -32,7 +31,7 @@ import com.intellij.psi.tree.TokenSet;
  */
 public class CSharpLexer extends MergingLexerAdapterBase
 {
-	private static final TokenSet ourMergeSet = TokenSet.create(CSharpTemplateTokens.MACRO_FRAGMENT, CSharpTokensImpl.LINE_DOC_COMMENT);
+	private static final TokenSet ourMergeSet = TokenSet.create(CSharpTokens.PREPROCESSOR_DIRECTIVE, CSharpTokensImpl.LINE_DOC_COMMENT);
 
 	private static class MyMergeFunction implements MergeFunction
 	{

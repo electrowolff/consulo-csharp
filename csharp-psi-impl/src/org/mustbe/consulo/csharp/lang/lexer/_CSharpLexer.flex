@@ -5,7 +5,6 @@ import com.intellij.lexer.LexerBase;
 import com.intellij.psi.tree.IElementType;
 import org.mustbe.consulo.csharp.lang.psi.CSharpTokens;
 import org.mustbe.consulo.csharp.lang.psi.CSharpTokensImpl;
-import org.mustbe.consulo.csharp.lang.psi.CSharpTemplateTokens;
 
 %%
 
@@ -70,9 +69,9 @@ MACRO_START={MACRO_NEW_LINE}?{MACRO_WHITE_SPACE}?"#"
 {
 	{MACRO_NEW_LINE}     {  yybegin(YYINITIAL); return CSharpTokens.WHITE_SPACE; }
 
-	{MACRO_WHITE_SPACE}  {  return CSharpTemplateTokens.MACRO_FRAGMENT; }
+	{MACRO_WHITE_SPACE}  {  return CSharpTokens.PREPROCESSOR_DIRECTIVE; }
 
-	[^]                    {  return CSharpTemplateTokens.MACRO_FRAGMENT; }
+	[^]                  {  return CSharpTokens.PREPROCESSOR_DIRECTIVE; }
 }
 
 <YYINITIAL>

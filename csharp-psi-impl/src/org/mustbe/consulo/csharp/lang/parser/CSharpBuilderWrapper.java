@@ -35,7 +35,6 @@ import org.mustbe.consulo.csharp.lang.parser.preprocessor.IfPreprocessorDirectiv
 import org.mustbe.consulo.csharp.lang.parser.preprocessor.PreprocessorDirective;
 import org.mustbe.consulo.csharp.lang.parser.preprocessor.PreprocessorParser;
 import org.mustbe.consulo.csharp.lang.psi.CSharpSoftTokens;
-import org.mustbe.consulo.csharp.lang.psi.CSharpTemplateTokens;
 import org.mustbe.consulo.csharp.lang.psi.CSharpTokens;
 import org.mustbe.consulo.csharp.lang.psi.impl.stub.elementTypes.CSharpFileStubElementType;
 import org.mustbe.consulo.csharp.lang.psi.impl.stub.elementTypes.macro.MacroEvaluator;
@@ -219,7 +218,7 @@ public class CSharpBuilderWrapper extends PsiBuilderAdapter
 			return null;
 		}
 
-		if(tokenType == CSharpTemplateTokens.MACRO_FRAGMENT)
+		if(tokenType == CSharpTokens.PREPROCESSOR_DIRECTIVE)
 		{
 			Set<String> variables = getUserData(CSharpFileStubElementType.PREPROCESSOR_VARIABLES);
 
@@ -295,7 +294,6 @@ public class CSharpBuilderWrapper extends PsiBuilderAdapter
 				myStates.pollLast();
 			}
 
-			remapCurrentToken(CSharpTokens.PREPROCESSOR_DIRECTIVE);
 			return CSharpTokens.PREPROCESSOR_DIRECTIVE;
 		}
 

@@ -19,6 +19,8 @@ package org.mustbe.consulo.csharp.lang.parser.preprocessor;
 import org.jetbrains.annotations.Nullable;
 import org.mustbe.consulo.csharp.lang.lexer.CSharpMacroLexer;
 import org.mustbe.consulo.csharp.lang.psi.CSharpMacroTokens;
+import com.intellij.lexer.Lexer;
+import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.tree.IElementType;
 
@@ -31,6 +33,7 @@ public class PreprocessorParser
 	public enum State
 	{
 		NONE,
+		SHARP,
 		DIRECTIVE,
 		VALUE
 	}
@@ -49,7 +52,7 @@ public class PreprocessorParser
 
 	public static void main(String[] args)
 	{
-		System.out.println(parse("#if TEST && TEST2"));
+		System.out.println(parse("#define TEST && TEST2"));
 	}
 
 	@Nullable
@@ -69,32 +72,48 @@ public class PreprocessorParser
 			switch(state)
 			{
 				case NONE:
-					if(elementType == CSharpMacroTokens.MACRO_DEFINE_KEYWORD || elementType == CSharpMacroTokens.MACRO_UNDEF_KEYWORD)
+					if(elementType == CSharpMacroTokens.SHARP)
+					{
+						state = State.SHARP;
+					}
+					break;
+				case SHARP:
+					if(isToken(lexer, "define"))
 					{
 						state = State.DIRECTIVE;
-						directive = elementType == CSharpMacroTokens.MACRO_DEFINE_KEYWORD ? Directive.DEFINE : Directive.UNDEF;
+						directive = Directive.DEFINE;
 					}
-					else if(elementType == CSharpMacroTokens.MACRO_IF_KEYWORD || elementType == CSharpMacroTokens.MACRO_ELIF_KEYWORD)
+					else if( isToken(lexer, "undef"))
 					{
 						state = State.DIRECTIVE;
-						directive = elementType == CSharpMacroTokens.MACRO_IF_KEYWORD ? Directive.IF : Directive.ELIF;
+						directive =  Directive.UNDEF;
 					}
-					else if(elementType == CSharpMacroTokens.MACRO_ENDIF_KEYWORD)
+					else if(isToken(lexer, "if"))
+					{
+						state = State.DIRECTIVE;
+						directive = Directive.IF;
+					}
+					else if(isToken(lexer, "elif"))
+					{
+						state = State.DIRECTIVE;
+						directive =  Directive.ELIF;
+					}
+					else if(isToken(lexer, "endif"))
 					{
 						state = State.DIRECTIVE;
 						directive = Directive.ENDIF;
 					}
-					else if(elementType == CSharpMacroTokens.MACRO_REGION_KEYWORD)
+					else if(isToken(lexer, "region"))
 					{
 						state = State.DIRECTIVE;
 						directive = Directive.REGION;
 					}
-					else if(elementType == CSharpMacroTokens.MACRO_ENDREGION_KEYWORD)
+					else if(isToken(lexer, "endregion"))
 					{
 						state = State.DIRECTIVE;
 						directive = Directive.ENDREGION;
 					}
-					else if(elementType == CSharpMacroTokens.MACRO_ELSE_KEYWORD)
+					else if(isToken(lexer, "else"))
 					{
 						state = State.DIRECTIVE;
 						directive = Directive.ELSE;
@@ -112,7 +131,7 @@ public class PreprocessorParser
 							if(elementType == CSharpMacroTokens.WHITE_SPACE)
 							{
 							}
-							else if(elementType == CSharpMacroTokens.MACRO_VALUE)
+							else if(elementType == CSharpMacroTokens.IDENTIFIER)
 							{
 								value = lexer.getTokenText();
 								state = State.VALUE;
@@ -164,5 +183,15 @@ public class PreprocessorParser
 		}
 
 		return null;
+	}
+
+	private static boolean isToken(Lexer lexer, String keywordName)
+	{
+		IElementType tokenType = lexer.getTokenType();
+		if(tokenType == CSharpMacroTokens.IDENTIFIER)
+		{
+			return Comparing.equal(keywordName, lexer.getTokenSequence());
+		}
+		return false;
 	}
 }
